@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - 8310:8000
+      - 8310:8310
       - 5678:5678
     volumes:
       - .:/code
@@ -13,7 +13,7 @@ services:
       - ollama-webui
     networks:
       - ollama-docker
-
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8310 --reload
   ollama:
     image: ollama/ollama:latest
     ports:
@@ -43,7 +43,7 @@ services:
       - OLLAMA_BASE_URLS=http://host.docker.internal:7869 #comma separated ollama hosts
       - ENV=dev
       - WEBUI_AUTH=False
-      - WEBUI_NAME=valiantlynx AI
+      - WEBUI_NAME=AI
       - WEBUI_URL=http://localhost:8080
       - WEBUI_SECRET_KEY=t0p-s3cr3t
     extra_hosts:
